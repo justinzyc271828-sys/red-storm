@@ -1,0 +1,86 @@
+name: Gameplay feedback
+description: Share a specific observation from a Red Storm match
+title: "[Feedback] "
+labels:
+  - gameplay-feedback
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The most useful feedback describes a real match: what you tried, when the result became clear, and where the game felt confusing, unfair, or especially satisfying.
+
+  - type: dropdown
+    id: experience
+    attributes:
+      label: RTS experience
+      options:
+        - New to RTS games
+        - Occasional RTS player
+        - Experienced RTS player
+    validations:
+      required: true
+
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode played
+      options:
+        - Tutorial
+        - Story campaign — Hard
+        - Story campaign — Ultra Hard
+        - Skirmish — Easy
+        - Skirmish — Normal
+        - Skirmish — Hard
+        - Sandstorm Mode
+    validations:
+      required: true
+
+  - type: dropdown
+    id: result
+    attributes:
+      label: Result
+      options:
+        - Victory
+        - Defeat
+        - Stopped before the end
+    validations:
+      required: true
+
+  - type: input
+    id: duration
+    attributes:
+      label: Approximate match length
+      placeholder: 18 minutes
+    validations:
+      required: true
+
+  - type: textarea
+    id: first_blocker
+    attributes:
+      label: Where did you first get stuck or confused?
+      description: Write "Nowhere" if the controls and goals were clear.
+    validations:
+      required: true
+
+  - type: textarea
+    id: turning_point
+    attributes:
+      label: When did the match feel decided?
+      description: Describe the event or approximate time when you felt you would clearly win or lose.
+    validations:
+      required: true
+
+  - type: textarea
+    id: best_moment
+    attributes:
+      label: Best or most memorable moment
+    validations:
+      required: true
+
+  - type: textarea
+    id: change
+    attributes:
+      label: One change you would make
+      description: If you could change only one thing, what would it be and why?
+    validations:
+      required: true

@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Generated and temporary artifacts
+art/processed/
+tmp/
+test/shots/
+test/*.log
+test/tmp-*
+
+# Retained browser and balance diagnostics
+!test/tmp-play-eval.py
+!test/tmp-combat-shot.py
+!test/tmp-z-key-check.py
+!test/tmp-hard-diag.js
+!test/tmp-firefox-smoke.py
+!test/tmp-i18n-walkthrough.py
+!test/tmp-final-check.py
+!test/tmp-online-check2.py
+
+# Local tooling and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+__pycache__/
+
+# Local configuration and coverage
+.env
+.env.*
+!.env.example
+coverage/
+dist/

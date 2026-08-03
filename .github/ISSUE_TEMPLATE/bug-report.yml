@@ -1,0 +1,95 @@
+name: Bug report
+description: Report a reproducible problem in Red Storm
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve Red Storm. Please do not include passwords, private files, account details, or other sensitive information.
+
+  - type: input
+    id: version
+    attributes:
+      label: Game version
+      description: Shown on the download page or game package.
+      placeholder: v0.8.1
+    validations:
+      required: true
+
+  - type: dropdown
+    id: launch
+    attributes:
+      label: How did you launch the game?
+      options:
+        - itch.io browser version
+        - Downloaded package opened from index.html
+        - Local HTTP server
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and operating system
+      placeholder: Chrome 128 on Windows 11
+    validations:
+      required: true
+
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Game mode
+      options:
+        - Tutorial
+        - Story campaign
+        - Skirmish
+        - Sandstorm Mode
+        - Title screen or settings
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: List the shortest sequence that reliably causes the problem.
+      placeholder: |
+        1. Start a Normal skirmish.
+        2. Build a refinery near the northern ore field.
+        3. Select the harvester and...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Optional evidence
+      description: Add a screenshot, short recording, seed, match time, or console error if available.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmation
+      options:
+        - label: I checked that this issue is not already reported.
+          required: true
+        - label: I removed private or sensitive information from the report.
+          required: true

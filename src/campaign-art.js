@@ -1,0 +1,5 @@
+/* 由 tools/convert-cg.js 自动生成,请勿手改。
+ * 剧情 CG 加载清单:cutscene.js 只请求列在这里的关键帧,其余走程序化兜底。 */
+(function (RS) {
+  RS.campaignArt = ["chapter1-defeat-base.png","chapter1-victory-wreck.png","chapter2-defeat-blockade.png","chapter2-victory-polar-signal.png","ending-loss-01-last-base-hit.png","ending-loss-02-last-base-fall.png","ending-loss-03-radio-silence.png","ending-loss-04-network-orange.png","ending-loss-05-permanent-production.png","ending-loss-06-red-silence.png","ending-win-01-core-assault.png","ending-win-02-core-collapse.png","ending-win-03-network-dark.png","ending-win-04-machines-stop.png","ending-win-05-city-light.png","ending-win-06-red-dawn.png","opening-01-orbit.png","opening-02-mine-routine.png","opening-03-machines-turn.png","opening-04-uprising.png","opening-05-network-map.png","opening-06-guard-deploy.png","opening-07-dawn-mine.png","transition-planet-spread.png","transition-polar-storm.png"];
+})(typeof window !== 'undefined' ? (window.RS = window.RS || {}) : (globalThis.RS = globalThis.RS || {}));
