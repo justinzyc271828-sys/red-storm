@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="https://justin-yao.itch.io/red-storm"><img alt="Play on itch.io" src="https://img.shields.io/badge/Play_on-itch.io-FA5C5C?logo=itchdotio&logoColor=white"></a>
-  <img alt="Version 0.8.1" src="https://img.shields.io/badge/version-0.8.1-C94332">
+  <img alt="Version 0.8.2" src="https://img.shields.io/badge/version-0.8.2-C94332">
   <img alt="HTML5" src="https://img.shields.io/badge/platform-HTML5-E34F26?logo=html5&logoColor=white">
   <a href="LICENSE"><img alt="Code license MIT" src="https://img.shields.io/badge/code-MIT-2F81F7"></a>
 </p>

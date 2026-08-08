@@ -1,6 +1,6 @@
 ﻿Red Storm public source export
-Generated: 2026-08-08T04:38:12Z
-Source commit: 953d6a8c9cdee20e37a7565342d83edd4532af18
+Generated: 2026-08-08T04:41:27Z
+Source commit: 551fc7cdc4ba48017b786c9692cc163874ec926c
 Files: 109
 
 d70bf3a3278a9e84cd268088c222976352a6b1576cdff5fc2cc07a81ab3368f7  .github/ISSUE_TEMPLATE/bug-report.yml
@@ -67,7 +67,7 @@ f734262fd47bd686ca24a036d60e21c944edb5f3da5ac3729fcef8e6e03c1824  docs/media/red
 8bb31400b8f91e591d975be5f3c455c6fa87f116ff68b1556a1e6a80fcbe0dfd  LICENSE
 6ec0a9ad9386e5bc58f6d67cbaa0373d6b3e8572a0d4774b9a5072b62f4f862f  package.json
 3ea3dff5d3b0fb41fbec300fcc8f0a4010b41fe4a762156a9e91d233c3cfe6e5  package-lock.json
-c0de32b86f674d81b56ee11689a68255588533f9da3ad274f705afd5e8a65587  README.md
+20f3efc599c36781fd83d5c204d63c5b79092c170d8d21cd692639344527f1eb  README.md
 bb26c1c48b913146cb2b1a1cc5763a4103ad57515a92fd456c84b540d7866169  README-PLAY.md
 a2acb2398c0a781fa8c035bf7bf6a7eb9d3d4a75f0e9110dd6bde805a8592c0e  src/ai.js
 dc9c8a25eff49dc345b8e7b5b11e30f0a0b573e42dab3dc913957b0326e42c8d  src/art-data.js
