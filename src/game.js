@@ -22,7 +22,7 @@
     markers: [],
     init, update, startGame,
     openFieldGuide, closeFieldGuide, setFieldGuidePage,
-    selectOnly, addSelect, clearSelection, commandSmart, commandAttack,
+    selectOnly, addSelect, clearSelection, commandSmart, commandAttack, toggleHoldFire,
     selectUnitGroup,
     tutorialAction,
     selectBuilding, clearBuildingSel, enqueueUnit, cancelLastUnit,
@@ -996,6 +996,21 @@
     RS.combat.attackCommand(fighters, target);
     game.markers.push({ x: wx, y: wy, t: game.time, kind: 'attack' });
     return true;
+  }
+
+  // ---------- 开火模式(H 键/面板按钮) ----------
+  // 停火 = 只打点名目标:不站岗索敌、不还击、不协防(combat.js 三处豁免);
+  // 显式指令(右键点名/攻击移动)不受影响。批量语义:全部已停火 → 全部恢复自由,否则全部停火。
+  function toggleHoldFire() {
+    const fighters = [...game.selection].filter(u => RS.units.TYPES[u.kind].dmg);
+    if (!fighters.length) return null;
+    const next = !fighters.every(u => u.holdFire);
+    for (const u of fighters) u.holdFire = next;
+    game.notice = {
+      text: next ? tStr('停火：仅攻击点名目标（H 切换）') : tStr('自由开火：自动索敌与还击（H 切换）'),
+      until: game.time + 3,
+    };
+    return next;
   }
 
   // ---------- 矿车行为 ----------

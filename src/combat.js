@@ -138,19 +138,23 @@
     target.lastDamageT = RS.game.time;
     if (!isBuilding(target) && target.hp > 0 && attacker && !isBuilding(attacker) && attacker.hp > 0) {
       const w = RS.units.TYPES[target.kind];
-      if (w.dmg && !target.target && canWeaponTarget(w, attacker) &&
+      if (w.dmg && !target.holdFire && !target.target && canWeaponTarget(w, attacker) &&
         visibleToOwner(target.owner, attacker)) {
         target.target = attacker; target.aggro = true;
       }
     }
-    // 协防:附近 7 格内的闲置友军看到同伴被打 → 一起上(不再只有挨打者本人还击)
+    // 协防:附近闲置友军看到同伴被打 → 一起上。单位遇袭限 7 格;建筑遇袭动员范围
+    // 扩到 defendRadius(12 格,基地另一头也醒来);两种都限武器射程 2.5 倍——只动员
+    // 够得着的,避免守军全员离位追击远征军(24 格不限射程实测 normal 1/9 破带,已回退)。
+    // 停火单位(holdFire)不参与协防。
     if (attacker && !isBuilding(attacker) && attacker.hp > 0) {
       const tp2 = posOf(target);
+      const assistR = isBuilding(target) ? RS.config.combat.defendRadius : RS.config.combat.assistRadius;
       for (const u of RS.game.units) {
         if (u.owner !== target.owner || u === target || u.hp <= 0) continue;
         const w2 = RS.units.TYPES[u.kind];
-        if (!w2.dmg || !canWeaponTarget(w2, attacker) || u.target || u.attackMove || u.path) continue;
-        if (Math.hypot(u.x - tp2.x, u.y - tp2.y) > 7) continue;
+        if (!w2.dmg || u.holdFire || !canWeaponTarget(w2, attacker) || u.target || u.attackMove || u.path) continue;
+        if (Math.hypot(u.x - tp2.x, u.y - tp2.y) > assistR) continue;
         if (visibleToOwner(u.owner, attacker) &&
           Math.hypot(attacker.x - u.x, attacker.y - u.y) <= w2.range * 2.5) {
           u.target = attacker; u.aggro = true;
@@ -294,8 +298,8 @@
       }
       if (!u.target && u.scanT <= 0) {
         u.scanT = SCAN;
-        // 站岗索敌:克制加权的射程内目标(RA 式就地开火)
-        u.target = pickTarget(u, w);
+        // 站岗索敌:克制加权的射程内目标(RA 式就地开火);停火单位不自动索敌
+        if (!u.holdFire) u.target = pickTarget(u, w);
       }
 
       if (!u.target) {

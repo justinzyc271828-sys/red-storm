@@ -1,11 +1,16 @@
 # Red Storm · 红色风暴
 
-版本：v0.8.1
+版本：v0.8.2
 
 A tiny real-time strategy game dedicated to Simon. Free to play and share.
 一款献给 Simon 的即时战略小游戏，免费发布，欢迎分享完整游戏包。
 
 ## English
+
+**New in v0.8.2 — Hold fire & base defense**: with combat units selected, press `H`
+(or the panel button) to toggle hold fire / weapons free; when your base is attacked,
+nearby idle units now rally to its defense automatically. Also fixes resource markers
+(ore, salvage) showing through unexplored fog.
 
 **New in v0.8.1 — Full battlefield sound kit**: 12 new combat and feedback effects
 (rifle fire, rocket launch, artillery, flamethrower, infantry steps, harvester engine,
@@ -37,6 +42,7 @@ No install, no network, no data upload. If the browser blocks local pages, run
 - `Z + LMB`: attack-move. Wheel: zoom. `WASD` / arrows / MMB drag / screen edge: camera.
 - `Left Alt+1`: all infantry; `Left Alt+2`: all combat vehicles; double-tap to jump to them.
 - `P`: pause (auto-pauses when the tab loses focus). `M`: mute all. `Esc`: cancel.
+- `H`: hold fire / weapons free (with combat units selected, or use the panel button).
 - Win by destroying the enemy Command Center; lose if yours falls.
 
 ### Assets
@@ -47,6 +53,9 @@ author holds usage rights for these assets, including public release and commerc
 under the respective platform terms. The game itself is free — share the complete package.
 
 ## 中文
+
+v0.8.2 新增「停火/自由开火」：选中作战单位后按 `H` 或点击面板按钮即可切换；基地遇袭时
+附近闲置部队现在会自动驰援协防。同时修复未探索黑雾提前透出矿石、残骸轮廓的显示问题。
 
 v0.8.1 装载全套战场音效：12 项新战斗与反馈音效（步枪、火箭、火炮、喷火、步兵脚步、
 矿车引擎、卸矿、完工、出兵、遇袭警报、胜负音），双击 index.html 直接运行时同样生效。
@@ -128,6 +137,7 @@ python -m http.server 8000
 - `P`：暂停或继续；手动暂停时只用 `P` 或左键恢复，右键不会误恢复。
 - 切到其他标签页会自动暂停，回到游戏后自动继续。
 - `M`：全部静音；`Esc`：取消当前操作。
+- `H`：停火 / 自由开火（需先选中作战单位，也可点击面板上的开火按钮）。
 - 选中己方建筑：左上角可以取消施工或回收建筑。
 - 矿车只会自动寻找已探索矿脉；先派作战单位侦察黑色区域。
 - 坠毁无人机只能用维修车修复；无人机可以互相攻击，遗迹战甲、火箭兵和防御炮塔可对空。

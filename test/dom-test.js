@@ -292,6 +292,21 @@ function fireDocument(type) {
     RS.render.frame(1 / 60);
     check('钻探车展开后绿色位置提示消失', RS.render.deepMineGuideSpots.length === 0);
 
+    // 开火模式:选中作战单位显示切换按钮;点击与 H 键都翻转停火状态
+    const fmU = RS.game.spawnUnitAt('rocket', dcx + 2, dcy, 'player');
+    RS.game.selectOnly([fmU]);
+    RS.render.frame(1 / 60);
+    const fmBtn = RS.render.fireModeRect;
+    check('选中作战单位显示开火模式按钮', !!fmBtn);
+    firePointer('pointerdown', { clientX: fmBtn.x + 5, clientY: fmBtn.y + 5, button: 0 });
+    check('点击开火按钮切换为停火', fmU.holdFire === true);
+    fireKey('keydown', { code: 'KeyH' });
+    fireKey('keyup', { code: 'KeyH' });
+    check('H 键恢复自由开火', fmU.holdFire === false);
+    RS.game.clearSelection();
+    RS.render.frame(1 / 60);
+    check('清空选择后开火按钮隐藏', RS.render.fireModeRect === null);
+
     // 缩放:按 delta 平滑变化、鼠标锚点不漂、可拉远到战略视野
     const zoom0 = RS.camera.zoom;
     const anchor0 = RS.render.clientToWorld(420, 260);

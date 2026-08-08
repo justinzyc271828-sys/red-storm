@@ -93,7 +93,7 @@ npm ci
 Run the canonical regressions individually from PowerShell:
 
 ```powershell
-$tests = 'sim-test','path-test','build-test','prod-test','combat-test','ai-test','map-test','dom-test','review-m5','mech-test','i18n-test'
+$tests = 'sim-test','path-test','build-test','prod-test','combat-test','ai-test','map-test','dom-test','review-m5','mech-test','i18n-test','onboarding-test','postmatch-test','field-guide-test','economy-test','audio-test','campaign-test'
 foreach ($test in $tests) {
   node "test/$test.js"
   if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

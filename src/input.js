@@ -103,6 +103,7 @@
         visibilityPaused = false;
       }
       if (e.code === 'KeyM' && !e.repeat && RS.audio.toggleMute) RS.audio.toggleMute(); // M = 静音
+      if (e.code === 'KeyH' && !e.repeat && RS.game.state === 'playing') RS.game.toggleHoldFire(); // H = 停火/自由开火
       if (e.code === 'Escape') {
         if (input.amMode) input.amMode = false;
         else if (input.buildMode) input.buildMode = null;
@@ -218,6 +219,10 @@
         return;
       }
       if (e.button === 0) {
+        if (RS.render.fireModeHit(e.clientX, e.clientY)) {
+          RS.game.toggleHoldFire();
+          return;
+        }
         if (RS.render.unitActionHit(e.clientX, e.clientY)) {
           deploySelectedDrillRig();
           return;
@@ -269,7 +274,7 @@
         if (input.buildMode) { input.buildMode = null; return; }
         // 右键不穿透 UI(小地图/建造栏上的右键只是误触,不下达指令)
         if (RS.render.minimapHit(e.clientX, e.clientY) || RS.render.paletteHit(e.clientX, e.clientY) ||
-            RS.render.unitActionHit(e.clientX, e.clientY) ||
+            RS.render.unitActionHit(e.clientX, e.clientY) || RS.render.fireModeHit(e.clientX, e.clientY) ||
             RS.render.buildingActionHit(e.clientX, e.clientY) ||
             RS.render.tutorialHit(e.clientX, e.clientY)) return;
         const w = RS.render.clientToWorld(e.clientX, e.clientY);
@@ -361,6 +366,10 @@
 
   // 触屏点按:与左键同一命中链;点到自己人=选择,点到别处且有选中=智能指令
   function tapRoute(cx, cy) {
+    if (RS.render.fireModeHit(cx, cy)) {
+      RS.game.toggleHoldFire();
+      return;
+    }
     if (RS.render.unitActionHit(cx, cy)) {
       deploySelectedDrillRig();
       return;

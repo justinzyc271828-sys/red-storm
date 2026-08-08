@@ -359,7 +359,11 @@
     "最后指令": "Final Directive",
     "左键点击一名我方士兵，或拖框选择多名单位。": "Left-click one of your soldiers, or drag a box to select several.",
     "左Alt+1/2 快速召集；Z+左键为攻击移动。坠毁无人机只能用维修车回收。": "LAlt+1/2 quick-groups; Z+LMB is Attack-Move. Crashed drones can only be salvaged by a Repair Vehicle.",
-    "左Alt+1步兵 · 左Alt+2战车 · 左键点选/框选 · 右键指令 · Z+左键攻击移动 · 滚轮缩放 · WASD/中键移镜头 · P暂停 M静音": "LAlt+1 infantry · LAlt+2 vehicles · LMB select/drag-box · RMB orders · Z+LMB Attack-Move · wheel zoom · WASD/MMB camera · P pause · M mute",
+    "左Alt+1步兵 · 左Alt+2战车 · 左键点选/框选 · 右键指令 · Z+左键攻击移动 · 滚轮缩放 · WASD/中键移镜头 · P暂停 M静音 H停火": "LAlt+1 infantry · LAlt+2 vehicles · LMB select/drag-box · RMB orders · Z+LMB Attack-Move · wheel zoom · WASD/MMB camera · P pause · M mute · H hold fire",
+    "开火模式:自由（H）": "Fire mode: Free (H)",
+    "开火模式:停火（H）": "Fire mode: Hold (H)",
+    "停火：仅攻击点名目标（H 切换）": "Hold fire: named targets only (H to toggle)",
+    "自由开火：自动索敌与还击（H 切换）": "Fire at will: auto-acquire & retaliate (H to toggle)",
     "坐标确认。那里是中枢主指挥中心。": "Coordinates confirmed. That is Core Central Command.",
     "RS-FIELD-04 · 双方同型单位基础数值完全一致": "RS-FIELD-04 · Identical units share identical stats on both sides",
   };

@@ -471,5 +471,62 @@ const x23 = lt23.x;
 run(1);
 check('快车按面板速度追击(1 秒 ≈2.8 格)', lt23.x - x23 > 2.2, '位移=' + (lt23.x - x23).toFixed(2));
 
+// 24. 停火(holdFire):不站岗索敌、不还击;右键点名不受影响(H/面板按钮切换)
+fresh();
+const hf1 = RS.game.spawnUnitAt('rocket', 50, 50, 'player');
+hf1.holdFire = true;
+const hfFoe = RS.game.spawnUnitAt('infantry', 52.5, 50, 'enemy');
+run(5);
+check('停火单位不站岗索敌也不还击', !hf1.target && hf1.hp < hf1.maxHp,
+  'target=' + !!hf1.target + ',余血=' + Math.round(hf1.hp) + '/' + hf1.maxHp);
+RS.combat.attackCommand([hf1], hfFoe);
+run(4);
+check('停火单位点名攻击可开火', hfFoe.hp < hfFoe.maxHp,
+  '敌余血=' + Math.round(hfFoe.hp) + '/' + hfFoe.maxHp);
+
+// 25. 建筑遇袭基地动员:defendRadius(12) 内且武器够得着(射程×2.5)的闲置单位参战;
+//     范围外与停火者不动。nearG 距建筑 11>7——旧 7 格规则不会协防,新规则会。
+fresh();
+const homeB = RS.game.placeStructure('barracks', 60, 60, 'player');
+const nearG = RS.game.spawnUnitAt('rocket', 72, 61, 'player');   // 距建筑中心 11<12 且距敌 8.5<10
+const farG = RS.game.spawnUnitAt('rocket', 90, 61, 'player');    // 距 29>12(且距敌 26.5>10)
+const holdG = RS.game.spawnUnitAt('rocket', 70, 61, 'player');   // 距 9 < 24 但停火
+holdG.holdFire = true;
+const invader = RS.game.spawnUnitAt('lightTank', 63.5, 61, 'enemy');
+RS.combat.attackCommand([invader], homeB);
+run(2);
+check('建筑遇袭:12格内且够得着的单位协防', nearG.target === invader,
+  'target=' + (nearG.target ? nearG.target.kind : 'none'));
+check('建筑遇袭:12格外单位不动', !farG.target,
+  'target=' + (farG.target ? farG.target.kind : 'none'));
+check('建筑遇袭:停火单位不协防', !holdG.target,
+  'target=' + (holdG.target ? holdG.target.kind : 'none'));
+
+// 26. 单位遇袭协防仍限 7 格 + 射程 2.5 倍(回归,不被建筑动员规则波及)
+fresh();
+const buddy1 = RS.game.spawnUnitAt('rocket', 50, 50, 'player');
+const buddy2 = RS.game.spawnUnitAt('rocket', 56.5, 50, 'player'); // 距 buddy1 6.5<7;距敌 8<4×2.5
+const buddy3 = RS.game.spawnUnitAt('rocket', 59, 50, 'player');   // 距 buddy1 9>7
+const shooter = RS.game.spawnUnitAt('lightTank', 48.5, 50, 'enemy');
+RS.combat.attackCommand([shooter], buddy1);
+run(2);
+check('单位遇袭:7格内友军仍协防', buddy2.target === shooter,
+  'target=' + (buddy2.target ? buddy2.target.kind : 'none'));
+check('单位遇袭:7格外友军不动', !buddy3.target,
+  'target=' + (buddy3.target ? buddy3.target.kind : 'none'));
+
+// 27. toggleHoldFire 批量语义:非全停火→全停火,全停火→全自由,无作战单位返回 null
+fresh();
+const tg1 = RS.game.spawnUnitAt('rocket', 50, 50, 'player');
+const tg2 = RS.game.spawnUnitAt('lightTank', 52, 50, 'player');
+const tg3 = RS.game.spawnUnitAt('harvester', 54, 50, 'player'); // 无 dmg,不受影响
+RS.game.selectOnly([tg1, tg2, tg3]);
+check('首次切换全部停火(矿车除外)',
+  RS.game.toggleHoldFire() === true && tg1.holdFire && tg2.holdFire && !tg3.holdFire);
+check('再次切换全部自由开火',
+  RS.game.toggleHoldFire() === false && !tg1.holdFire && !tg2.holdFire);
+RS.game.clearSelection();
+check('空选切换返回 null', RS.game.toggleHoldFire() === null);
+
 console.log(failures === 0 ? '\n全部通过' : '\n有 ' + failures + ' 项失败');
 process.exit(failures === 0 ? 0 : 1);

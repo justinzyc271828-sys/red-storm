@@ -7,8 +7,9 @@
   const render = RS.render = {
     init, frame, scene: null, sctx: null, fps: 0,
     worldToClient, clientToWorld, paletteHit, prodHit, unitActionHit, buildingActionHit, titleHit, titleLogoHit,
-    fieldGuideHit, guideTerminalHit, endHit, minimapHit, tutorialHit, powerStatus,
+    fieldGuideHit, guideTerminalHit, endHit, minimapHit, tutorialHit, powerStatus, fireModeHit,
     paletteRects: [], prodRects: [], unitActionRect: null, buildingActionRect: null, titleRects: [],
+    fireModeRect: null,
     deepMineGuideSpots: [],
     tutorialPanelRect: null, tutorialActionRect: null, tutorialSkipRect: null,
     endActionRect: null, titleLogoRect: null, fieldGuideRects: [],
@@ -82,7 +83,7 @@
     const V = RS.map.visited, N = RS.map.visible;
     const seen = !V || V[j * RS.config.MAP_W + i]; // 历史探索过
     const vis = !N || N[j * RS.config.MAP_W + i];  // 当前在视野内
-    if (t.ore > 0) {
+    if (t.ore > 0 && seen) { // 未探索矿区/特殊物不画造型(否则骸骨等大贴图伸出迷雾黑格)
       const sp = t.sp && RS.sprites.props && RS.sprites.props[t.sp];
       if (sp) { // 特殊物(骸骨/晶簇)有专属造型
         x2.drawImage(sp.canvas, sx - sp.ax, sy - sp.ay);
@@ -807,7 +808,7 @@
     mctx.fillStyle = '#d8b8a0';
     mctx.fillText(compact
       ? tStr('点按选择/指令 · 长按=右键 · 双指缩放 · P暂停 M静音')
-      : tStr('左Alt+1步兵 · 左Alt+2战车 · 左键点选/框选 · 右键指令 · Z+左键攻击移动 · 滚轮缩放 · WASD/中键移镜头 · P暂停 M静音'), 14, H - 21);
+      : tStr('左Alt+1步兵 · 左Alt+2战车 · 左键点选/框选 · 右键指令 · Z+左键攻击移动 · 滚轮缩放 · WASD/中键移镜头 · P暂停 M静音 H停火'), 14, H - 21);
 
     // 暂停覆盖层
     if (RS.game.paused) {
@@ -828,9 +829,11 @@
   function drawSelectionPanel() {
     const sel = [...RS.game.selection];
     render.unitActionRect = null;
+    render.fireModeRect = null;
     if (!sel.length) return;
     const drill = sel.length === 1 && sel[0].kind === 'drillRig';
-    const panelH = drill ? 112 : 76, panelW = 250, px = 10, py = H - 26 - panelH - 8;
+    const fighters = sel.filter(u => RS.units.TYPES[u.kind].dmg);
+    const panelH = drill ? 112 : (fighters.length ? 110 : 76), panelW = 250, px = 10, py = H - 26 - panelH - 8;
     mctx.fillStyle = 'rgba(20,10,6,0.78)';
     mctx.fillRect(px, py, panelW, panelH);
     mctx.strokeStyle = '#2e7fd9'; mctx.lineWidth = 1;
@@ -883,6 +886,24 @@
         gx += 62;
       }
     }
+
+    // 开火模式切换(选中含作战单位时显示;H 键同效):停火 = 只打点名目标
+    if (!drill && fighters.length) {
+      const hold = fighters.every(u => u.holdFire);
+      const r = { x: px + 8, y: py + 78, w: panelW - 16, h: 26 };
+      render.fireModeRect = r;
+      mctx.fillStyle = hold ? 'rgba(148,62,42,0.55)' : 'rgba(46,127,217,0.42)';
+      mctx.fillRect(r.x, r.y, r.w, r.h);
+      mctx.strokeStyle = hold ? '#ff9a6a' : '#8fc7f5';
+      mctx.strokeRect(r.x + 0.5, r.y + 0.5, r.w - 1, r.h - 1);
+      mctx.fillStyle = hold ? '#ffd2b8' : '#eaf6ff';
+      mctx.fillText(hold ? tStr('开火模式:停火（H）') : tStr('开火模式:自由（H）'), r.x + 10, r.y + 6);
+    }
+  }
+
+  function fireModeHit(cx, cy) {
+    const r = render.fireModeRect;
+    return !!(r && cx >= r.x && cx <= r.x + r.w && cy >= r.y && cy <= r.y + r.h);
   }
 
   function unitActionHit(cx, cy) {
